@@ -1,1 +1,1 @@
-this a personal project
+A project for industrial attachment.
