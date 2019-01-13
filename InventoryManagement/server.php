@@ -4,6 +4,7 @@ session_start();
 // initializing variables
 $username = "";
 $email    = "";
+
 $errors = array(); 
 
 // connect to the database
@@ -60,7 +61,8 @@ if (isset($_POST['reg_user'])) {
   			  VALUES('$username', '$email', '$password','$first_name','$last_name',$mobile)";
   	mysqli_query($db, $query);
   	$_SESSION['username'] = $username;
-  	$_SESSION['success'] = "You are now logged in";
+  	$_SESSION['first_name'] =$first_name;
+	$_SESSION['last_name'] =$last_name;
   	header('location: index.php');
   }
 }
@@ -89,13 +91,25 @@ if(isset($_POST['submit']))
     echo "Password is invalid";
 }
       $query = "SELECT * FROM register WHERE username='$username' AND password_1 ='$password'";
+		
+		
+		
+		
+		$sql="SELECT first_name,last_name FROM register WHERE username='$username' AND password_1 ='$password'";
+		$result=mysqli_query($db,$sql);  
+		$row=mysqli_fetch_assoc($result);
+	 
+	 
+	 
       $results = mysqli_query($db, $query);
       $res=mysqli_num_rows($results);
       if ($res) 
       {
         $_SESSION['username'] = $username;
-        $_SESSION['success'] = "You are now logged in";
-        header('location: table.php');
+        $_SESSION['first_name'] =$row["first_name"];
+		
+		$_SESSION['last_name'] =$row["last_name"];
+        header('location: index.php');
       }
       else 
       {
